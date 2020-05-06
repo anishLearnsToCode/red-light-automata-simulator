@@ -6,8 +6,8 @@ import {CrossingState} from './crossing-state.enum';
 export class Crossing {
   mainStreetRedLight = new RedLight();
   sideStreetRedLight = new RedLight(RedLightColor.RED);
-  carsInMainStreet = 0;
-  carsInSideStreet = 0;
+  carsInMainStreet = 100;
+  carsInSideStreet = 100;
   mainStreetRunTime = 10;
   sideStreetRunTime = 10;
   crossingTime = 5;
@@ -50,9 +50,9 @@ export class Crossing {
   }
 
   createCarCrossingHandler() {
-    this.carCrossingHandler$ = this.createSimpleTimer(this.crossingTime).subscribe(() => {
-      this.reduceCarFromCurrentLane();
-    });
+    // this.carCrossingHandler$ = this.createSimpleTimer(this.crossingTime).subscribe(() => {
+    //   this.reduceCarFromCurrentLane();
+    // });
   }
 
   reduceCarFromCurrentLane() {
@@ -70,7 +70,10 @@ export class Crossing {
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[0] = tick + 1;
       this.totalElapsedTimeSeconds++;
-      if ((tick >= this.mainStreetRunTime) && (this.carsInSideStreet > 0)) {
+      if ((tick + 1) % this.crossingTime === 0) {
+        this.carsInMainStreet--;
+      }
+      if ((tick + 1 >= this.mainStreetRunTime) && (this.carsInSideStreet > 0)) {
         this.state2();
       }
     });
@@ -81,7 +84,7 @@ export class Crossing {
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[1] = tick + 1;
       this.totalElapsedTimeSeconds++;
-      if (tick >= this.crossingTime) {
+      if (tick + 1 >= this.crossingTime) {
         this.state3();
       }
     });
@@ -92,7 +95,10 @@ export class Crossing {
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[2] = tick + 1;
       this.totalElapsedTimeSeconds++;
-      if (tick >= this.sideStreetRunTime || this.carsInSideStreet === 0) {
+      if ((tick + 1) % this.crossingTime === 0) {
+        this.carsInSideStreet--;
+      }
+      if (tick + 1 >= this.sideStreetRunTime || this.carsInSideStreet === 0) {
         this.state4();
       }
     });
@@ -103,7 +109,7 @@ export class Crossing {
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[3] = tick + 1;
       this.totalElapsedTimeSeconds++;
-      if (tick >= this.crossingTime) {
+      if (tick + 1 >= this.crossingTime) {
         this.state1();
       }
     });

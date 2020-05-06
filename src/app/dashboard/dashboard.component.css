@@ -109,6 +109,11 @@
   text-align: center;
 }
 
+.cars {
+  font-size: 20px;
+  color: #333333;
+}
+
 .selected {
   background-color: pink;
 }

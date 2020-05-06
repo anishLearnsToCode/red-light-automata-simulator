@@ -71,6 +71,7 @@
           <div class="counter">
             <span class="time">{{crossing.stateElapsedTime[0]}}</span><span> / {{crossing.mainStreetRunTime}} seconds (T<sub>m</sub>)</span>
           </div>
+          <div class="cars">{{crossing.carsInMainStreet}} Cars</div>
           <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
         </div>
       </div>
@@ -90,6 +91,7 @@
           <div class="counter">
             <span class="time">{{crossing.stateElapsedTime[2]}}</span><span> / {{crossing.sideStreetRunTime}} seconds (T<sub>s</sub>)</span>
           </div>
+          <div class="cars">{{crossing.carsInSideStreet}} Cars</div>
           <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
         </div>
       </div>
