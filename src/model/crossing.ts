@@ -4,8 +4,8 @@ import {interval, Observable, Subscription} from 'rxjs';
 import {CrossingState} from './crossing-state.enum';
 
 export class Crossing {
-  mainStreetRedLight = new RedLight();
-  sideStreetRedLight = new RedLight(RedLightColor.RED);
+  mainStreetRedLight: RedLight;
+  sideStreetRedLight: RedLight;
   carsInMainStreet = 100;
   carsInSideStreet = 100;
   mainStreetRunTime = 10;
@@ -13,7 +13,6 @@ export class Crossing {
   crossingTime = 5;
   state: CrossingState;
   runningSpeed = 1;
-  carCrossingHandler$: Subscription;
   stateHandler$: Subscription;
   simulationRunning = false;
   stateElapsedTime: number[] = [];
@@ -24,9 +23,9 @@ export class Crossing {
 
   stopSimulation() {
     this.simulationRunning = false;
-    this.endCarCrossingHandler();
     this.endStateHandler();
     this.state = undefined;
+    this.totalElapsedTimeSeconds = 0;
   }
 
   endStateHandler() {
@@ -35,34 +34,15 @@ export class Crossing {
     }
   }
 
-  endCarCrossingHandler() {
-    this.carCrossingHandler$.unsubscribe();
-  }
-
   pauseSimulation() {
 
   }
 
   startSimulation() {
     this.simulationRunning = true;
-    this.createCarCrossingHandler();
+    this.mainStreetRedLight = new RedLight();
+    this.sideStreetRedLight = new RedLight(RedLightColor.RED);
     this.state1();
-  }
-
-  createCarCrossingHandler() {
-    // this.carCrossingHandler$ = this.createSimpleTimer(this.crossingTime).subscribe(() => {
-    //   this.reduceCarFromCurrentLane();
-    // });
-  }
-
-  reduceCarFromCurrentLane() {
-    switch (this.state) {
-      case CrossingState.STATE_1:
-        this.carsInMainStreet = (this.carsInMainStreet === 0 ? 0 : --this.carsInMainStreet);
-        break;
-      case CrossingState.STATE_3:
-        this.carsInSideStreet = (this.carsInSideStreet === 0 ? 0 : --this.carsInSideStreet);
-    }
   }
 
   state1() {
@@ -127,7 +107,6 @@ export class Crossing {
     }
     this.setRedLightColorForMainStreet();
     this.setRedLightColorForSideStreet();
-    this.createCarCrossingHandler();
   }
 
   setRedLightColorForMainStreet() {
