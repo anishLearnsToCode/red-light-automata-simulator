@@ -40,7 +40,7 @@
     </div>
 
     <div id="red-lights-container">
-      <h1>Red Lights -- {{second}}</h1>
+      <h1>Red Lights</h1>
       <div id="red-lights">
         <div class="red-light">
           <app-red-light [redLight]="crossing.mainStreetRedLight"></app-red-light>
@@ -57,6 +57,12 @@
 
   <div id="bottom-panel">
     <h1>State Transitions</h1>
+    <div id="button-row">
+      <div class="button" [ngClass]="{'disabled' : crossing.simulationRunning}" (click)="startSimulation()">Start Simulation</div>
+      <div class="button btn-warning" [ngClass]="{'disabled' : !crossing.simulationRunning}" (click)="pauseSimulation()">Pause Simulation</div>
+      <div class="button btn-danger" [ngClass]="{'disabled' : crossing.timeElapsed === 0}" (click)="stopSimulation()">Stop Simulation</div>
+      <span>Time Elapsed {{minutes}}:{{seconds}}:{{milliSeconds}}</span>
+    </div>
     <div id="states">
 
       <div class="state" [ngClass]="{'selected' : crossing.state === 0}">
@@ -73,7 +79,7 @@
         <span>State 2</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+            <span class="time">100</span><span> / {{crossing.crossingTime}} seconds</span>
           </div>
         </div>
       </div>
@@ -82,7 +88,7 @@
         <span>State 3</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+            <span class="time">100</span><span> / {{crossing.sideStreetRunTime}} seconds</span>
           </div>
           <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
         </div>
@@ -92,7 +98,7 @@
         <span>State 4</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+            <span class="time">100</span><span> / {{crossing.crossingTime}} seconds</span>
           </div>
         </div>
       </div>

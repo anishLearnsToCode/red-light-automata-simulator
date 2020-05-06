@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Crossing} from '../../model/crossing';
-import {interval, Subscription} from 'rxjs';
+import {interval, Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,19 +9,42 @@ import {interval, Subscription} from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   crossing = new Crossing();
-  subscription: Subscription;
-  second = 100000;
+  elapsedTime$: Subscription;
+  milliSeconds = 0;
+  seconds = 0;
+  minutes = 0;
 
   constructor() {
-    this.crossing.startSimulation();
   }
 
   ngOnInit(): void {
   }
 
+  startSimulation() {
+    this.elapsedTime$ = interval(20).subscribe((tick) => {
+      this.milliSeconds = (tick + this.milliSeconds) % 100;
+      this.seconds = Math.floor((tick + this.seconds) / 50);
+      this.minutes = Math.floor((tick + this.minutes) / 3000);
+    });
+    this.crossing.startSimulation();
+  }
+
+  pauseSimulation() {
+    if (this.crossing.simulationRunning && this.milliSeconds > 0) {
+      this.elapsedTime$.unsubscribe();
+      this.crossing.pauseSimulation();
+    }
+  }
+
+  stopSimulation() {
+    if (this.milliSeconds > 0) {
+      this.elapsedTime$ = undefined;
+      this.milliSeconds = this.seconds = this.minutes = 0;
+      this.crossing.stopSimulation();
+    }
+  }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   addCarInMainStreet() {

@@ -81,6 +81,20 @@
   padding: 20px;
 }
 
+#button-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+#button-row > .button {
+  margin-right: 10px;
+}
+
+#button-row > span {
+  font-size: 20px;
+}
+
 #states {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

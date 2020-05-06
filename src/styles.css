@@ -41,5 +41,27 @@ a:hover {
 
 .button:hover {
   cursor: pointer;
-  background-color: #1976d2;
+  background-color: cadetblue;
+}
+
+.btn-danger {
+  background-color: red;
+}
+.btn-danger:hover {
+  background-color: darkred;
+}
+
+.btn-warning {
+  background-color: orange;
+}
+.btn-warning:hover {
+  background-color: orangered;
+}
+
+.disabled {
+  background-color: lightgrey;
+}
+.disabled:hover {
+  background-color: lightgrey;
+  cursor: default;
 }

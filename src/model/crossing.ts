@@ -6,25 +6,43 @@ import {CrossingState} from './crossing-state.enum';
 export class Crossing {
   mainStreetRedLight = new RedLight();
   sideStreetRedLight = new RedLight(RedLightColor.RED);
-  carsInMainStreet = 10;
-  carsInSideStreet = 10;
+  carsInMainStreet = 5;
+  carsInSideStreet = 5;
   mainStreetRunTime = 10;
-  sideStreetRunTime = 25;
+  sideStreetRunTime = 10;
   crossingTime = 5;
-  state = CrossingState.STATE_1;
+  state: CrossingState;
   runningSpeed = 1;
   globalTimer$: Observable<number>;
   carCrossingHandler$: Subscription;
   stateTimer$: Observable<number>;
   stateHandler$: Subscription;
+  timeElapsed$: Subscription;
+  timeElapsed = 0;
+  simulationRunning = false;
 
   constructor() {
   }
 
+  stopSimulation() {
+
+  }
+
+  pauseSimulation() {
+
+  }
+
   startSimulation() {
-    this.globalTimer$ = this.createSimpleTimer();
+    this.simulationRunning = true;
+    this.startElapsedTime();
     this.createCarCrossingHandler();
     this.state1();
+  }
+
+  startElapsedTime() {
+    this.timeElapsed$ = interval(20).subscribe((milliSecond) => {
+      this.timeElapsed = milliSecond;
+    });
   }
 
   createCarCrossingHandler() {
