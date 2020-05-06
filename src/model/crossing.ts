@@ -6,7 +6,7 @@ import {CrossingState} from './crossing-state.enum';
 export class Crossing {
   mainStreetRedLight = new RedLight();
   sideStreetRedLight = new RedLight(RedLightColor.RED);
-  carsInMainStreet = 50;
+  carsInMainStreet = 100;
   carsInSideStreet = 50;
   mainStreetRunTime = 10;
   sideStreetRunTime = 10;

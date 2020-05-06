@@ -65,10 +65,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   setSpeed15x(): void {
-    this.crossing.runningSpeed = 10;
+    this.crossing.runningSpeed = 15;
   }
 
   setSpeed20x(): void {
-    this.crossing.runningSpeed = 10;
+    this.crossing.runningSpeed = 20;
   }
 }
