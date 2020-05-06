@@ -13,20 +13,22 @@ export class Crossing {
   crossingTime = 5;
   state = CrossingState.STATE_1;
   runningSpeed = 1;
-  globalTimer$ = interval(1000 / this.runningSpeed);
-  carCrossingTimer$ = interval(1000 * this.crossingTime / this.runningSpeed);
+  globalTimer$: Observable<number>;
   carCrossingHandler$: Subscription;
   stateTimer$: Observable<number>;
   stateHandler$: Subscription;
 
   constructor() {
-    this.carCrossingTimer$ = interval(1000 * this.crossingTime / this.runningSpeed);
+  }
+
+  startSimulation() {
+    this.globalTimer$ = this.createSimpleTimer();
     this.createCarCrossingHandler();
     this.state1();
   }
 
   createCarCrossingHandler() {
-    this.carCrossingHandler$ = this.carCrossingTimer$.subscribe(((value) => {
+    this.carCrossingHandler$ = this.createSimpleTimer(this.crossingTime).subscribe(((value) => {
       console.log(value);
       this.reduceCarFromCurrentLane();
     }));
@@ -46,9 +48,7 @@ export class Crossing {
 
   state1() {
     this.handleTransition(CrossingState.STATE_1);
-
-    this.stateTimer$ = interval(1000 / this.runningSpeed);
-    this.stateHandler$ = this.stateTimer$.subscribe((value) => {
+    this.stateHandler$ = this.createSimpleTimer().subscribe((value) => {
       if ((value > this.mainStreetRunTime) && (this.carsInSideStreet > 0)) {
         this.state2();
       }
@@ -74,8 +74,9 @@ export class Crossing {
     setTimeout(() => { this.state1(); }, this.crossingTime * 1000 / this.runningSpeed);
   }
 
-  createSimpleTimer(): Observable<number> {
-    return interval(1000 / this.runningSpeed);
+  createSimpleTimer(seconds?: number): Observable<number> {
+    seconds = seconds === undefined || null ? 1 : seconds;
+    return interval(1000 * seconds / this.runningSpeed);
   }
 
   handleTransition(state: CrossingState) {

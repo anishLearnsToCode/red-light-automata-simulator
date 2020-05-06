@@ -10,12 +10,11 @@ import {interval, Subscription} from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
   crossing = new Crossing();
   subscription: Subscription;
-  second: number;
-  globalTime = this.crossing.globalTimer$.subscribe((tick) => {
-    this.second = tick;
-  });
+  second = 100000;
 
-  constructor() { }
+  constructor() {
+    this.crossing.startSimulation();
+  }
 
   ngOnInit(): void {
   }
