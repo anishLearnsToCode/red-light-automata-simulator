@@ -17,6 +17,7 @@ export class Crossing {
   simulationRunning = false;
   stateElapsedTime: number[] = [];
   totalElapsedTimeSeconds = 0;
+  crossingTimeSeconds = 0;
 
   constructor() {
   }
@@ -49,6 +50,7 @@ export class Crossing {
     this.handleTransition(CrossingState.STATE_1);
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[0] = tick + 1;
+      this.crossingTimeSeconds = this.stateElapsedTime[0] % this.crossingTime;
       this.totalElapsedTimeSeconds++;
       if ((tick + 1) % this.crossingTime === 0) {
         this.carsInMainStreet--;
@@ -74,6 +76,7 @@ export class Crossing {
     this.handleTransition(CrossingState.STATE_3);
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[2] = tick + 1;
+      this.crossingTimeSeconds = this.stateElapsedTime[2] % this.crossingTime;
       this.totalElapsedTimeSeconds++;
       if ((tick + 1) % this.crossingTime === 0) {
         this.carsInSideStreet--;
@@ -102,6 +105,7 @@ export class Crossing {
 
   handleTransition(state: CrossingState) {
     this.state = state;
+    this.crossingTimeSeconds = 0;
     if (this.stateHandler$) {
       this.stateHandler$.unsubscribe();
     }

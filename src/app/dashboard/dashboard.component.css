@@ -109,6 +109,11 @@
   text-align: center;
 }
 
+#car-crossing {
+  border: none;
+  background-color: lightcyan;
+}
+
 .cars {
   font-size: 20px;
   color: #333333;
