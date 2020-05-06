@@ -19,6 +19,11 @@
       </div>
 
       <div class="row">
+        <label>Wait Time (T<sub>w</sub>) (seconds)</label>
+        <input type="number" min="1" [(ngModel)]="crossing.waitTime">
+      </div>
+
+      <div class="row">
         <div class="button" (click)="addCarInMainStreet()">Add Car in Main Street</div>
         <span>Cars in Main Street: {{crossing.carsInMainStreet}}</span>
       </div>
@@ -62,7 +67,7 @@
       <div class="button btn-warning" [ngClass]="{'disabled' : !crossing.simulationRunning}" (click)="pauseSimulation()">Pause Simulation</div>
       <div class="button btn-danger" [ngClass]="{'disabled' : crossing.totalElapsedTimeSeconds === 0 }" (click)="stopSimulation()">Stop Simulation</div>
       <span>Time Elapsed : {{crossing.totalElapsedTimeSeconds}} seconds</span>
-      <span>Car Crossing : {{crossing.crossingTimeSeconds}} / {{crossing.crossingTime}} seconds</span>
+      <span>Car Crossing : {{crossing.crossingTimeSeconds}} / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
     </div>
     <div id="states">
 
@@ -80,7 +85,7 @@
         <span>State 2</span>
         <div class="info">
           <div class="counter">
-            <span class="time">{{crossing.stateElapsedTime[1]}}</span><span> / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
+            <span class="time">{{crossing.stateElapsedTime[1]}}</span><span> / {{crossing.waitTime}} seconds (T<sub>w</sub>)</span>
           </div>
         </div>
       </div>
@@ -100,7 +105,7 @@
         <span>State 4</span>
         <div class="info">
           <div class="counter">
-            <span class="time">{{crossing.stateElapsedTime[3]}}</span><span> / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
+            <span class="time">{{crossing.stateElapsedTime[3]}}</span><span> / {{crossing.waitTime}} seconds (T<sub>w</sub>)</span>
           </div>
         </div>
       </div>

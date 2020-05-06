@@ -18,6 +18,7 @@ export class Crossing {
   stateElapsedTime: number[] = [];
   totalElapsedTimeSeconds = 0;
   crossingTimeSeconds = 0;
+  waitTime = 5;
 
   constructor() {
   }
@@ -27,6 +28,11 @@ export class Crossing {
     this.endStateHandler();
     this.state = undefined;
     this.totalElapsedTimeSeconds = 0;
+  }
+
+  initializeRedLights(): void {
+    this.mainStreetRedLight = new RedLight();
+    this.sideStreetRedLight = new RedLight(RedLightColor.RED);
   }
 
   endStateHandler() {
@@ -41,8 +47,7 @@ export class Crossing {
 
   startSimulation() {
     this.simulationRunning = true;
-    this.mainStreetRedLight = new RedLight();
-    this.sideStreetRedLight = new RedLight(RedLightColor.RED);
+    this.initializeRedLights();
     this.state1();
   }
 
@@ -66,7 +71,7 @@ export class Crossing {
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[1] = tick + 1;
       this.totalElapsedTimeSeconds++;
-      if (tick + 1 >= this.crossingTime) {
+      if (tick + 1 >= this.waitTime) {
         this.state3();
       }
     });
@@ -92,7 +97,7 @@ export class Crossing {
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
       this.stateElapsedTime[3] = tick + 1;
       this.totalElapsedTimeSeconds++;
-      if (tick + 1 >= this.crossingTime) {
+      if (tick + 1 >= this.waitTime) {
         this.state1();
       }
     });
