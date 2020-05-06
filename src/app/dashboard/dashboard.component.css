@@ -47,6 +47,8 @@
 
 .red-light > span {
   text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 10px;
 }
 
 #bottom-panel {
