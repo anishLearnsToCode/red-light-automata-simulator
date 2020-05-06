@@ -1,5 +1,5 @@
 export enum RedLightColor {
-  GREEN,
-  RED,
-  YELLOW
+  GREEN = 'green',
+  RED = 'red',
+  YELLOW = 'yellow'
 }

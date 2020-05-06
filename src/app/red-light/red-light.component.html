@@ -1,5 +1,5 @@
 <div id="component-container">
-  <div class="red"></div>
-  <div class="yellow"></div>
-  <div class="green"></div>
+  <div [ngClass]="{'red' : redLight.state === 'red'}"></div>
+  <div [ngClass]="{'yellow' : redLight.state === 'yellow'}"></div>
+  <div [ngClass]="{'green' : redLight.state === 'green'}"></div>
 </div>

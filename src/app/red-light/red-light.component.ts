@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {RedLight} from '../../model/red-light';
 
 @Component({
   selector: 'app-red-light',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./red-light.component.css']
 })
 export class RedLightComponent implements OnInit {
+
+  @Input() redLight: RedLight;
 
   constructor() { }
 

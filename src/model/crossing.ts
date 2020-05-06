@@ -9,7 +9,7 @@ export class Crossing {
 
   constructor() {
     this.mainStreetRedLight = new RedLight();
-    this.sideStreetRedLight = new RedLight();
+    this.sideStreetRedLight = new RedLight(RedLightColor.RED);
   }
 
   state1() {
