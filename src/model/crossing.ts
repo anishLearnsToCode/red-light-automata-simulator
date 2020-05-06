@@ -1,42 +1,118 @@
 import {RedLight} from './red-light';
 import {RedLightColor} from './red-light-color.enum';
+import {interval, Observable, Subscription} from 'rxjs';
+import {CrossingState} from './crossing-state.enum';
 
 export class Crossing {
-  mainStreetRedLight: RedLight;
-  sideStreetRedLight: RedLight;
-  carsInMainStreet = 0;
-  carsInSideStreet = 0;
-  mainStreetRunTime = 255;
+  mainStreetRedLight = new RedLight();
+  sideStreetRedLight = new RedLight(RedLightColor.RED);
+  carsInMainStreet = 10;
+  carsInSideStreet = 10;
+  mainStreetRunTime = 10;
   sideStreetRunTime = 25;
   crossingTime = 5;
+  state = CrossingState.STATE_1;
+  runningSpeed = 1;
+  globalTimer$ = interval(1000 / this.runningSpeed);
+  carCrossingTimer$ = interval(1000 * this.crossingTime / this.runningSpeed);
+  carCrossingHandler$: Subscription;
+  stateTimer$: Observable<number>;
+  stateHandler$: Subscription;
 
   constructor() {
-    this.mainStreetRedLight = new RedLight();
-    this.sideStreetRedLight = new RedLight(RedLightColor.RED);
+    this.carCrossingTimer$ = interval(1000 * this.crossingTime / this.runningSpeed);
+    this.createCarCrossingHandler();
+    this.state1();
   }
 
-  async test(): Promise<void> {
-    return ;
+  createCarCrossingHandler() {
+    this.carCrossingHandler$ = this.carCrossingTimer$.subscribe(((value) => {
+      console.log(value);
+      this.reduceCarFromCurrentLane();
+    }));
+  }
+
+  reduceCarFromCurrentLane() {
+    switch (this.state) {
+      case CrossingState.STATE_1:
+        console.log('reducing');
+        this.carsInMainStreet = (this.carsInMainStreet === 0 ? 0 : --this.carsInMainStreet);
+        break;
+      case CrossingState.STATE_3:
+        console.log('reducing');
+        this.carsInSideStreet = (this.carsInSideStreet === 0 ? 0 : --this.carsInSideStreet);
+    }
   }
 
   state1() {
-    this.mainStreetRedLight.state = RedLightColor.GREEN;
-    this.sideStreetRedLight.state = RedLightColor.RED;
+    this.handleTransition(CrossingState.STATE_1);
+
+    this.stateTimer$ = interval(1000 / this.runningSpeed);
+    this.stateHandler$ = this.stateTimer$.subscribe((value) => {
+      if ((value > this.mainStreetRunTime) && (this.carsInSideStreet > 0)) {
+        this.state2();
+      }
+    });
   }
 
   state2() {
-    this.mainStreetRedLight.state = RedLightColor.YELLOW;
-    this.sideStreetRedLight.state = RedLightColor.RED;
+    this.handleTransition(CrossingState.STATE_2);
+    setTimeout(() => { this.state3(); }, this.crossingTime * 1000 / this.runningSpeed);
   }
 
   state3() {
-    this.mainStreetRedLight.state = RedLightColor.RED;
-    this.sideStreetRedLight.state = RedLightColor.GREEN;
+    this.handleTransition(CrossingState.STATE_3);
+    this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
+      if (tick > this.crossingTime || this.carsInSideStreet === 0) {
+        this.state4();
+      }
+    });
   }
 
   state4() {
-    this.mainStreetRedLight.state = RedLightColor.RED;
-    this.sideStreetRedLight.state = RedLightColor.YELLOW;
+    this.handleTransition(CrossingState.STATE_4);
+    setTimeout(() => { this.state1(); }, this.crossingTime * 1000 / this.runningSpeed);
+  }
+
+  createSimpleTimer(): Observable<number> {
+    return interval(1000 / this.runningSpeed);
+  }
+
+  handleTransition(state: CrossingState) {
+    this.state = state;
+    this.stateTimer$ = undefined;
+    if (this.stateHandler$) {
+      this.stateHandler$.unsubscribe();
+    }
+    this.setRedLightColorForMainStreet();
+    this.setRedLightColorForSideStreet();
+  }
+
+  setRedLightColorForMainStreet() {
+    switch (this.state) {
+      case CrossingState.STATE_1:
+        this.mainStreetRedLight.state = RedLightColor.GREEN;
+        break;
+      case CrossingState.STATE_2:
+        this.mainStreetRedLight.state = RedLightColor.YELLOW;
+        break;
+      case CrossingState.STATE_3:
+      case CrossingState.STATE_4: this.mainStreetRedLight.state = RedLightColor.RED;
+    }
+  }
+
+  setRedLightColorForSideStreet() {
+    switch (this.state) {
+      case CrossingState.STATE_1:
+      case CrossingState.STATE_2:
+        this.sideStreetRedLight.state = RedLightColor.RED;
+        break;
+      case CrossingState.STATE_3:
+        this.sideStreetRedLight.state = RedLightColor.GREEN;
+        break;
+      case CrossingState.STATE_4:
+        this.sideStreetRedLight.state = RedLightColor.YELLOW;
+    }
   }
 
   addCarInMainStreet(): void {

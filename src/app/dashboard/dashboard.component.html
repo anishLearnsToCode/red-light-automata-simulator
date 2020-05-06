@@ -27,10 +27,20 @@
         <div class="button" (click)="addCarInSideStreet()">Add Car in Side Street</div>
         <span>Cars In Side Street: {{crossing.carsInSideStreet}}</span>
       </div>
+
+      <div class="row">
+        <span>Simulation Speed</span>
+        <div id="speed-controls">
+          <span [ngClass]="{'selected' : crossing.runningSpeed === 1}" (click)="setSpeed1x()">1x</span>
+          <span [ngClass]="{'selected' : crossing.runningSpeed === 2}" (click)="setSpeed2x()">2x</span>
+          <span [ngClass]="{'selected' : crossing.runningSpeed === 5}" (click)="setSpeed5x()">5x</span>
+          <span [ngClass]="{'selected' : crossing.runningSpeed === 10}" (click)="setSpeed10x()">10x</span>
+        </div>
+      </div>
     </div>
 
     <div id="red-lights-container">
-      <h1>Red Lights</h1>
+      <h1>Red Lights -- {{second}}</h1>
       <div id="red-lights">
         <div class="red-light">
           <app-red-light [redLight]="crossing.mainStreetRedLight"></app-red-light>
@@ -45,5 +55,47 @@
     </div>
   </div>
 
-  <div id="bottom-panel"></div>
+  <div id="bottom-panel">
+    <h1>State Transitions</h1>
+    <div id="states">
+
+      <div class="state" [ngClass]="{'selected' : crossing.state === 0}">
+        <span>State 1</span>
+        <div class="info">
+          <div class="counter">
+            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+          </div>
+          <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
+        </div>
+      </div>
+
+      <div class="state" [ngClass]="{'selected' : crossing.state === 1}">
+        <span>State 2</span>
+        <div class="info">
+          <div class="counter">
+            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="state" [ngClass]="{'selected' : crossing.state === 2}">
+        <span>State 3</span>
+        <div class="info">
+          <div class="counter">
+            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+          </div>
+          <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
+        </div>
+      </div>
+
+      <div class="state" [ngClass]="{'selected' : crossing.state === 3}">
+        <span>State 4</span>
+        <div class="info">
+          <div class="counter">
+            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

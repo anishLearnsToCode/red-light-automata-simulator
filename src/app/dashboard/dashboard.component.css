@@ -25,6 +25,32 @@
   align-items: center;
 }
 
+#speed-controls {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+#speed-controls > span {
+  padding: 10px;
+}
+
+#speed-controls > span:hover {
+  cursor: pointer;
+  background-color: darkcyan;
+  color: white;
+}
+
+#speed-controls > .selected {
+  background-color: blueviolet;
+  color: white;
+}
+
+#speed-controls > .selected:hover {
+  background-color: blueviolet;
+}
+
 #red-lights-container {
   background-color: lightcyan;
   padding: 20px;
@@ -52,5 +78,40 @@
 }
 
 #bottom-panel {
+  padding: 20px;
+}
 
+#states {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+.state {
+  border: 1px solid pink;
+  padding: 30px;
+  border-radius: 5px;
+
+  text-align: center;
+}
+
+.selected {
+  background-color: pink;
+}
+
+.state > span {
+  font-size: 25px;
+  text-transform: uppercase;
+}
+
+.info {
+  margin-top: 40px;
+}
+
+.time {
+  font-size: 20px;
+}
+
+.hidden {
+  visibility: hidden;
 }

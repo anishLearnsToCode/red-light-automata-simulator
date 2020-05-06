@@ -1,17 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Crossing} from '../../model/crossing';
+import {interval, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   crossing = new Crossing();
+  subscription: Subscription;
+  second: number;
+  globalTime = this.crossing.globalTimer$.subscribe((tick) => {
+    this.second = tick;
+  });
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   addCarInMainStreet() {
@@ -20,5 +31,21 @@ export class DashboardComponent implements OnInit {
 
   addCarInSideStreet(): void {
     this.crossing.addCarInSideStreet();
+  }
+
+  setSpeed1x() {
+    this.crossing.runningSpeed = 1;
+  }
+
+  setSpeed2x() {
+    this.crossing.runningSpeed = 2;
+  }
+
+  setSpeed5x(): void {
+    this.crossing.runningSpeed = 5;
+  }
+
+  setSpeed10x(): void {
+    this.crossing.runningSpeed = 10;
   }
 }
