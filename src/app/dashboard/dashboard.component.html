@@ -61,7 +61,7 @@
       <div class="button" [ngClass]="{'disabled' : crossing.simulationRunning}" (click)="startSimulation()">Start Simulation</div>
       <div class="button btn-warning" [ngClass]="{'disabled' : !crossing.simulationRunning}" (click)="pauseSimulation()">Pause Simulation</div>
       <div class="button btn-danger" [ngClass]="{'disabled' : milliSeconds === 0}" (click)="stopSimulation()">Stop Simulation</div>
-      <span>Time Elapsed {{minutes}}:{{seconds}}:{{milliSeconds}}</span>
+      <span>Time Elapsed : {{crossing.totalElapsedTimeSeconds}} seconds</span>
     </div>
     <div id="states">
 
@@ -69,7 +69,7 @@
         <span>State 1</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.mainStreetRunTime}} seconds</span>
+            <span class="time">{{crossing.stateElapsedTime[0]}}</span><span> / {{crossing.mainStreetRunTime}} seconds (T<sub>m</sub>)</span>
           </div>
           <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
         </div>
@@ -79,7 +79,7 @@
         <span>State 2</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.crossingTime}} seconds</span>
+            <span class="time">{{crossing.stateElapsedTime[1]}}</span><span> / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
         <span>State 3</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.sideStreetRunTime}} seconds</span>
+            <span class="time">{{crossing.stateElapsedTime[2]}}</span><span> / {{crossing.sideStreetRunTime}} seconds (T<sub>s</sub>)</span>
           </div>
           <div class="notification" [ngClass]="{'hidden' : crossing.carsInSideStreet === 0}">Cars in Side Street</div>
         </div>
@@ -98,7 +98,7 @@
         <span>State 4</span>
         <div class="info">
           <div class="counter">
-            <span class="time">100</span><span> / {{crossing.crossingTime}} seconds</span>
+            <span class="time">{{crossing.stateElapsedTime[3]}}</span><span> / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
           </div>
         </div>
       </div>

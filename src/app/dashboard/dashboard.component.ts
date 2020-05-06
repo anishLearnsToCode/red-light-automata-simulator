@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   startSimulation() {
     this.elapsedTime$ = interval(20).subscribe((tick) => {
       this.milliSeconds = (tick + this.milliSeconds) % 100;
-      this.seconds = Math.floor((tick + this.seconds) / 50);
+      this.seconds = Math.floor((tick + this.seconds) / 50) % 60;
       this.minutes = Math.floor((tick + this.minutes) / 3000);
     });
     this.crossing.startSimulation();
