@@ -60,7 +60,7 @@
     <div id="button-row">
       <div class="button" [ngClass]="{'disabled' : crossing.simulationRunning}" (click)="startSimulation()">Start Simulation</div>
       <div class="button btn-warning" [ngClass]="{'disabled' : !crossing.simulationRunning}" (click)="pauseSimulation()">Pause Simulation</div>
-      <div class="button btn-danger" [ngClass]="{'disabled' : crossing.timeElapsed === 0}" (click)="stopSimulation()">Stop Simulation</div>
+      <div class="button btn-danger" [ngClass]="{'disabled' : milliSeconds === 0}" (click)="stopSimulation()">Stop Simulation</div>
       <span>Time Elapsed {{minutes}}:{{seconds}}:{{milliSeconds}}</span>
     </div>
     <div id="states">

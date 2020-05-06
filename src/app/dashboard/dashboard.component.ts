@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   stopSimulation() {
     if (this.milliSeconds > 0) {
-      this.elapsedTime$ = undefined;
+      this.elapsedTime$.unsubscribe();
       this.milliSeconds = this.seconds = this.minutes = 0;
       this.crossing.stopSimulation();
     }

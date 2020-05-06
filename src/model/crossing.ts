@@ -7,7 +7,7 @@ export class Crossing {
   mainStreetRedLight = new RedLight();
   sideStreetRedLight = new RedLight(RedLightColor.RED);
   carsInMainStreet = 5;
-  carsInSideStreet = 5;
+  carsInSideStreet = 0;
   mainStreetRunTime = 10;
   sideStreetRunTime = 10;
   crossingTime = 5;
@@ -17,15 +17,19 @@ export class Crossing {
   carCrossingHandler$: Subscription;
   stateTimer$: Observable<number>;
   stateHandler$: Subscription;
-  timeElapsed$: Subscription;
-  timeElapsed = 0;
   simulationRunning = false;
 
   constructor() {
   }
 
   stopSimulation() {
+    this.simulationRunning = false;
+    this.endCarCrossingHandler();
+    this.state = undefined;
+  }
 
+  endCarCrossingHandler() {
+    this.carCrossingHandler$.unsubscribe();
   }
 
   pauseSimulation() {
@@ -34,20 +38,12 @@ export class Crossing {
 
   startSimulation() {
     this.simulationRunning = true;
-    this.startElapsedTime();
     this.createCarCrossingHandler();
     this.state1();
   }
 
-  startElapsedTime() {
-    this.timeElapsed$ = interval(20).subscribe((milliSecond) => {
-      this.timeElapsed = milliSecond;
-    });
-  }
-
   createCarCrossingHandler() {
     this.carCrossingHandler$ = this.createSimpleTimer(this.crossingTime).subscribe(((value) => {
-      console.log(value);
       this.reduceCarFromCurrentLane();
     }));
   }
@@ -55,11 +51,9 @@ export class Crossing {
   reduceCarFromCurrentLane() {
     switch (this.state) {
       case CrossingState.STATE_1:
-        console.log('reducing');
         this.carsInMainStreet = (this.carsInMainStreet === 0 ? 0 : --this.carsInMainStreet);
         break;
       case CrossingState.STATE_3:
-        console.log('reducing');
         this.carsInSideStreet = (this.carsInSideStreet === 0 ? 0 : --this.carsInSideStreet);
     }
   }
