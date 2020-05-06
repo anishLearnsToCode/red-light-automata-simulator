@@ -93,6 +93,8 @@
 
 #button-row > span {
   font-size: 20px;
+  justify-self: right;
+  margin-right: 20px;
 }
 
 #states {

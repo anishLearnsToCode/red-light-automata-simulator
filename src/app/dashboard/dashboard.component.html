@@ -62,6 +62,7 @@
       <div class="button btn-warning" [ngClass]="{'disabled' : !crossing.simulationRunning}" (click)="pauseSimulation()">Pause Simulation</div>
       <div class="button btn-danger" [ngClass]="{'disabled' : crossing.totalElapsedTimeSeconds === 0 }" (click)="stopSimulation()">Stop Simulation</div>
       <span>Time Elapsed : {{crossing.totalElapsedTimeSeconds}} seconds</span>
+      <span>Car Crossing : {{crossing.crossingTimeSeconds}} / {{crossing.crossingTime}} seconds</span>
     </div>
     <div id="states">
 
@@ -100,15 +101,6 @@
         <div class="info">
           <div class="counter">
             <span class="time">{{crossing.stateElapsedTime[3]}}</span><span> / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="state" id="car-crossing" [ngClass]="{'selected' : crossing.state === 3}">
-        <span>Car Crossing</span>
-        <div class="info">
-          <div class="counter">
-            <span class="time">{{crossing.crossingTimeSeconds}}</span><span> / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>
           </div>
         </div>
       </div>
