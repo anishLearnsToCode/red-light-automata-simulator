@@ -13,11 +13,11 @@ export class Crossing {
   crossingTime = 5;
   state: CrossingState;
   runningSpeed = 1;
-  globalTimer$: Observable<number>;
   carCrossingHandler$: Subscription;
   stateTimer$: Observable<number>;
   stateHandler$: Subscription;
   simulationRunning = false;
+  stateElapsedTime: number[] = [];
 
   constructor() {
   }
@@ -25,7 +25,14 @@ export class Crossing {
   stopSimulation() {
     this.simulationRunning = false;
     this.endCarCrossingHandler();
+    this.endStateHandler();
     this.state = undefined;
+  }
+
+  endStateHandler() {
+    if (this.stateHandler$) {
+      this.stateHandler$.unsubscribe();
+    }
   }
 
   endCarCrossingHandler() {
@@ -60,8 +67,9 @@ export class Crossing {
 
   state1() {
     this.handleTransition(CrossingState.STATE_1);
-    this.stateHandler$ = this.createSimpleTimer().subscribe((value) => {
-      if ((value > this.mainStreetRunTime) && (this.carsInSideStreet > 0)) {
+    this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
+      this.stateElapsedTime[0] = tick;
+      if ((tick > this.mainStreetRunTime) && (this.carsInSideStreet > 0)) {
         this.state2();
       }
     });
@@ -69,12 +77,18 @@ export class Crossing {
 
   state2() {
     this.handleTransition(CrossingState.STATE_2);
-    setTimeout(() => { this.state3(); }, this.crossingTime * 1000 / this.runningSpeed);
+    this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
+      this.stateElapsedTime[1] = tick;
+      if (tick > this.crossingTime) {
+        this.state3();
+      }
+    });
   }
 
   state3() {
     this.handleTransition(CrossingState.STATE_3);
     this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
+      this.stateElapsedTime[2] = tick;
       if (tick > this.crossingTime || this.carsInSideStreet === 0) {
         this.state4();
       }
@@ -83,7 +97,12 @@ export class Crossing {
 
   state4() {
     this.handleTransition(CrossingState.STATE_4);
-    setTimeout(() => { this.state1(); }, this.crossingTime * 1000 / this.runningSpeed);
+    this.stateHandler$ = this.createSimpleTimer().subscribe((tick) => {
+      this.stateElapsedTime[3] = tick;
+      if (tick > this.crossingTime) {
+        this.state1();
+      }
+    });
   }
 
   createSimpleTimer(seconds?: number): Observable<number> {
