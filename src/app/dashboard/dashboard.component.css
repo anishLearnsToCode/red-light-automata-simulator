@@ -57,6 +57,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   grid-gap: 10px;
+  text-align: center;
 }
 
 #red-lights {
@@ -84,7 +85,7 @@
 #button-row {
   display: flex;
   margin-bottom: 10px;
-  align-items: center;
+  align-items: baseline;
 }
 
 #button-row > .button {

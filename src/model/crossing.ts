@@ -10,7 +10,7 @@ export class Crossing {
   carsInSideStreet = 50;
   mainStreetRunTime = 10;
   sideStreetRunTime = 10;
-  crossingTime = 5;
+  crossingTime = 4;
   state: CrossingState;
   runningSpeed = 1;
   stateHandler$: Subscription;

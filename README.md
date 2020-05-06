@@ -1,27 +1,37 @@
-# RedLightAutomata
+# Red Lights Simulator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+This is a traffic simulator based on a Finite State Machine (DFA) in Theory of Computation. It is 
+assuming a  crossing which consists of a main street (like a highway) and a side street.
 
-## Development server
+These 2 streets are perpendicular to each other and the traffic running on teh main street is given priority.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+There are several attributes to this system:
 
-## Code scaffolding
+__Main Street Minimum Run Time (T<sub>m</sub>)__ This is the minimum time for which the traffic
+light will remain green in the main street.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+__Side Street Minimum Run Time (T<sub>s</sub>)__ This is the minimum time for which the side street
+traffic light will remain green provided there ae cars in teh side street. If there are no cars in the side street
+the traffic light will not remain green. 
 
-## Build
+This is different than the main street, as there the light will remain green even if there 
+are no cars.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+__Crossing Time (T<sub>c</sub>)__ This is the time taken by any car (either in the main street
+or the side street) to cross the crossing when the light is green for them.
 
-## Running unit tests
+__Wait Time (T<sub>w</sub>)__ This is the time taken by the traffic light to turn green from 
+yellow. 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Running on the Browser
+The project is deployed [here](https://red-light-automata-simulator.firebaseapp.com/simulator)
 
-## Running end-to-end tests
+## Running the Project on you machine
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```bash
+git cone https://github.com/anishLearnsToCode/red-light-automata-simulator.git
+cd red-light-automata-simulator
+ng serve
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This will it run it locally on your machine on [port 4200](http://localhost:4200/)
