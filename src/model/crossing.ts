@@ -6,10 +6,17 @@ export class Crossing {
   sideStreetRedLight: RedLight;
   carsInMainStreet = 0;
   carsInSideStreet = 0;
+  mainStreetRunTime = 255;
+  sideStreetRunTime = 25;
+  crossingTime = 5;
 
   constructor() {
     this.mainStreetRedLight = new RedLight();
     this.sideStreetRedLight = new RedLight(RedLightColor.RED);
+  }
+
+  async test(): Promise<void> {
+    return ;
   }
 
   state1() {

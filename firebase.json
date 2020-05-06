@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": "dist/red-light-automata",
     "ignore": [
       "firebase.json",
       "**/.*",

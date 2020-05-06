@@ -5,17 +5,17 @@
 
       <div class="row">
         <label id="main-street-run-time">Main Street Minimum Run Time (T<sub>m</sub>) (seconds)</label>
-        <input type="number" min="0">
+        <input type="number" min="0" [(ngModel)]="crossing.mainStreetRunTime">
       </div>
 
       <div class="row">
         <label>Side Street Minimum Run Time (T<sub>s</sub>) (seconds)</label>
-        <input type="number" min="0">
+        <input type="number" min="0" [(ngModel)]="crossing.sideStreetRunTime">
       </div>
 
       <div class="row">
         <label>Crossing Time (T<sub>c</sub>) (seconds)</label>
-        <input type="number" min="0">
+        <input type="number" min="0" [(ngModel)]="crossing.crossingTime">
       </div>
 
       <div class="row">
@@ -24,7 +24,7 @@
       </div>
 
       <div class="row">
-        <div class="button" (click)="addCarInSideStreet()">Add Car in Main Street</div>
+        <div class="button" (click)="addCarInSideStreet()">Add Car in Side Street</div>
         <span>Cars In Side Street: {{crossing.carsInSideStreet}}</span>
       </div>
     </div>
