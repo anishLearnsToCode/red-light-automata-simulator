@@ -40,6 +40,8 @@
           <span [ngClass]="{'selected' : crossing.runningSpeed === 2}" (click)="setSpeed2x()">2x</span>
           <span [ngClass]="{'selected' : crossing.runningSpeed === 5}" (click)="setSpeed5x()">5x</span>
           <span [ngClass]="{'selected' : crossing.runningSpeed === 10}" (click)="setSpeed10x()">10x</span>
+          <span [ngClass]="{'selected' : crossing.runningSpeed === 15}" (click)="setSpeed15x()">15x</span>
+          <span [ngClass]="{'selected' : crossing.runningSpeed === 20}" (click)="setSpeed20x()">20x</span>
         </div>
       </div>
     </div>
@@ -64,7 +66,6 @@
     <h1>State Transitions</h1>
     <div id="button-row">
       <div class="button" [ngClass]="{'disabled' : crossing.simulationRunning}" (click)="startSimulation()">Start Simulation</div>
-      <div class="button btn-warning" [ngClass]="{'disabled' : !crossing.simulationRunning}" (click)="pauseSimulation()">Pause Simulation</div>
       <div class="button btn-danger" [ngClass]="{'disabled' : crossing.totalElapsedTimeSeconds === 0 }" (click)="stopSimulation()">Stop Simulation</div>
       <span>Time Elapsed : {{crossing.totalElapsedTimeSeconds}} seconds</span>
       <span>Car Crossing : {{crossing.crossingTimeSeconds}} / {{crossing.crossingTime}} seconds (T<sub>c</sub>)</span>

@@ -29,13 +29,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.crossing.startSimulation();
   }
 
-  pauseSimulation() {
-    if (this.crossing.simulationRunning && this.milliSeconds > 0) {
-      this.elapsedTime$.unsubscribe();
-      this.crossing.pauseSimulation();
-    }
-  }
-
   stopSimulation() {
     if (this.milliSeconds > 0) {
       this.elapsedTime$.unsubscribe();
@@ -68,6 +61,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   setSpeed10x(): void {
+    this.crossing.runningSpeed = 10;
+  }
+
+  setSpeed15x(): void {
+    this.crossing.runningSpeed = 10;
+  }
+
+  setSpeed20x(): void {
     this.crossing.runningSpeed = 10;
   }
 }
