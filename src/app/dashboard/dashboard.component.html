@@ -1,0 +1,49 @@
+<div id="component-container">
+  <div id="top-panel">
+    <div id="controls">
+      <h1>Controls</h1>
+
+      <div class="row">
+        <label id="main-street-run-time">Main Street Minimum Run Time (T<sub>m</sub>) (seconds)</label>
+        <input type="number" min="0">
+      </div>
+
+      <div class="row">
+        <label>Side Street Minimum Run Time (T<sub>s</sub>) (seconds)</label>
+        <input type="number" min="0">
+      </div>
+
+      <div class="row">
+        <label>Crossing Time (T<sub>c</sub>) (seconds)</label>
+        <input type="number" min="0">
+      </div>
+
+      <div class="row">
+        <div class="button" (click)="addCarInMainStreet()">Add Car in Main Street</div>
+        <span>Cars in Main Street: {{crossing.carsInMainStreet}}</span>
+      </div>
+
+      <div class="row">
+        <div class="button" (click)="addCarInSideStreet()">Add Car in Main Street</div>
+        <span>Cars In Side Street: {{crossing.carsInSideStreet}}</span>
+      </div>
+    </div>
+
+    <div id="red-lights-container">
+      <h1>Red Lights</h1>
+      <div id="red-lights">
+        <div class="red-light">
+          <app-red-light></app-red-light>
+          <span>Main Street Red Light</span>
+        </div>
+
+        <div class="red-light">
+          <app-red-light></app-red-light>
+          <span>Side Street Red Light</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-panel"></div>
+</div>

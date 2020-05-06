@@ -11,13 +11,8 @@ body {
   padding: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 8px 0;
+h1 {
+  font-size: 20px;
 }
 
 p {
@@ -33,4 +28,18 @@ a:hover {
 
 a:hover {
   color: #125699;
+}
+
+.button {
+  background-color: blueviolet;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #1976d2;
 }

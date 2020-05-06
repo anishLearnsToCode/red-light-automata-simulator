@@ -1,0 +1,54 @@
+#component-container {
+  width: 100vw;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+#top-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#controls {
+  background-color: lightgrey;
+  padding: 20px;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, auto);
+  grid-gap: 10px;
+}
+
+#controls > .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: left;
+  align-items: center;
+}
+
+#red-lights-container {
+  background-color: lightcyan;
+  padding: 20px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 10px;
+}
+
+#red-lights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.red-light {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: center;
+}
+
+.red-light > span {
+  text-transform: uppercase;
+}
+
+#bottom-panel {
+
+}
